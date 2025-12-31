@@ -1391,8 +1391,11 @@ DATASET_RELEVANCE = {
 async def search_wikipedia(query: str) -> str:
     """Search Wikipedia for agricultural information"""
     try:
-        result = wiki.run(query)
-        return result if result else ""
+        if 'wiki' in globals():
+            result = wiki.run(query)
+            return result if result else ""
+        else:
+            return ""
     except Exception as e:
         print(f"⚠️ Wikipedia search error: {e}")
         return ""
@@ -1400,8 +1403,11 @@ async def search_wikipedia(query: str) -> str:
 async def search_duckduckgo(query: str) -> str:
     """Search DuckDuckGo for agricultural information"""
     try:
-        result = duckduckgo_search.run(query)
-        return result if result else ""
+        if 'duckduckgo_search' in globals():
+            result = duckduckgo_search.run(query)
+            return result if result else ""
+        else:
+            return ""
     except Exception as e:
         print(f"⚠️ DuckDuckGo search error: {e}")
         return ""
@@ -1409,8 +1415,11 @@ async def search_duckduckgo(query: str) -> str:
 async def search_arxiv(query: str) -> str:
     """Search Arxiv for agricultural research papers"""
     try:
-        result = arxiv.run(query)
-        return result if result else ""
+        if 'arxiv' in globals():
+            result = arxiv.run(query)
+            return result if result else ""
+        else:
+            return ""
     except Exception as e:
         print(f"⚠️ Arxiv search error: {e}")
         return ""
