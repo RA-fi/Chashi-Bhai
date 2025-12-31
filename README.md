@@ -105,7 +105,13 @@
 
 </div>
 
+<div align="center">
+
 **Advanced agricultural intelligence** designed to revolutionize farming through location-based guidance. Built with **LLaMA 3.3 70B**, **NASA satellite data**, and **multilingual NLP** to provide farmers real-time, data-driven insights in their native language.
+
+</div>
+
+<div align="center">
 
 <table>
 <tr>
@@ -140,9 +146,15 @@ Response
 </tr>
 </table>
 
+</div>
+
+<div align="center">
+
 ### 🎯 Mission
 
 > *"Democratizing agricultural expertise through AI-powered intelligence"*
+
+</div>
 
 <details>
 <summary><b>🌐 View Supported Languages</b></summary>
@@ -681,10 +693,12 @@ flowchart TD
 
 ## 🛠️ Technology Stack
 
+<div align="center">
+
 ### Backend Technologies
 
 | Technology | Purpose | Version |
-|------------|---------|---------|
+|:----------:|:-------:|:-------:|
 | ![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white) | Core Language | 3.11+ |
 | ![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white) | Web Framework | 0.104+ |
 | ![HTTPX](https://img.shields.io/badge/HTTPX-orange) | Async HTTP Client | Latest |
@@ -696,7 +710,7 @@ flowchart TD
 ### Frontend Technologies
 
 | Technology | Purpose |
-|------------|---------|
+|:----------:|:-------:|
 | ![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white) | Structure |
 | ![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white) | Styling |
 | ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black) | Interactivity |
@@ -707,7 +721,7 @@ flowchart TD
 ### External APIs & Services
 
 | Service | Usage | Confidence |
-|---------|-------|------------|
+|:--------|:-----:|:----------:|
 | **GROQ API** | LLaMA 3.3 70B inference | N/A |
 | **NASA POWER** | Weather & climate data | N/A |
 | **NASA MODIS** | Crop monitoring | N/A |
@@ -727,11 +741,22 @@ flowchart TD
 - ![Git](https://img.shields.io/badge/Git-F05032?logo=git&logoColor=white) Version Control
 - ![GitHub](https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white) Code Repository
 
----
+</div>
+
+<br/>
+
+<!-- Divider -->
+<p align="center">
+  <img src="https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/solar.png" alt="divider"/>
+</p>
+
+<br/>
 
 ## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Hand%20gestures/Waving%20Hand.png" alt="Wave" width="30" /> Getting Started
 
 ### 📍 Prerequisites
+
+<div align="center">
 
 <table>
 <tr>
@@ -766,7 +791,13 @@ flowchart TD
 </tr>
 </table>
 
+</div>
+
+<div align="center">
+
 ### ⚡ Quick Start (5 Minutes)
+
+</div>
 
 **1️⃣ Clone Repository**
 
@@ -832,6 +863,8 @@ Navigate to: **http://localhost:8080**
 
 ## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Gear.png" alt="Gear" width="30" /> Configuration
 
+<div align="center">
+
 ### 🔐 Environment Variables
 
 <div align="center">
@@ -849,7 +882,11 @@ Navigate to: **http://localhost:8080**
 
 </div>
 
+<div align="center">
+
 ### Getting API Keys
+
+</div>
 
 **🔑 GROQ API (Required)**
 
@@ -874,7 +911,11 @@ Navigate to: **http://localhost:8080**
 3. Get API key from dashboard
 4. Copy and add to `.env`
 
+<div align="center">
+
 ### Location Detection Flow
+
+</div>
 
 ```
 ┌─────────────────────────────────────────┐
@@ -935,11 +976,22 @@ Responses:       30 minutes
 User Context:    24 hours
 ```
 
----
+<br/>
+
+<!-- Divider -->
+<p align="center">
+  <img src="https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/vintage.png" alt="divider"/>
+</p>
+
+<br/>
 
 ## 📚 API Documentation
 
+<div align="center">
+
 ### Main Endpoint
+
+</div>
 
 **`POST /chat`**
 
@@ -999,11 +1051,24 @@ Serves the main web interface.
 
 **Response:** HTML page with full UI
 
----
+<br/>
+
+<!-- Divider -->
+<p align="center">
+  <img src="https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/water.png" alt="divider"/>
+</p>
+
+<br/>
 
 ## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Bar%20Chart.png" alt="Chart" width="30" /> Data Sources
 
+<div align="center">
+
 ### 🛰️ NASA Earth Observation Data
+
+</div>
+
+<div align="center">
 
 <table>
 <tr>
@@ -1056,15 +1121,29 @@ Serves the main web interface.
 </tr>
 </table>
 
+</div>
+
+<div align="center">
+
 **NASA GRACE**<br/>
 *Gravity Recovery and Climate Experiment*
+
+</div>
 
 - **Data**: Groundwater storage anomalies
 - **Resolution**: ~100km
 - **Update**: Monthly
 - **Use Case**: Water resource management
 
+</div>
+
+<div align="center">
+
 ### 🏛️ Research Institutions
+
+</div>
+
+<div align="center">
 
 **BRRI (Bangladesh Rice Research Institute)**
 - Rice varieties and cultivation techniques
@@ -1080,6 +1159,17 @@ Serves the main web interface.
 - Global agricultural best practices
 - International crop data
 - Sustainable farming guidelines
+
+</div>
+
+<br/>
+
+<!-- Divider -->
+<p align="center">
+  <img src="https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/grass.png" alt="divider"/>
+</p>
+
+<br/>
 
 ## <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Light%20Bulb.png" alt="Bulb" width="30" /> Usage Examples
 
