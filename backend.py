@@ -72,6 +72,7 @@ from settings import WEATHER_UNDERGROUND_API_KEY, WEATHER_UNDERGROUND_BASE_URL
 from settings import FAO_API_BASE_URL, FAO_DATAMART_URL
 from settings import BARC_API_URL, DAE_API_URL, BRRI_API_URL, BARI_API_URL
 from settings import ALLOW_ORIGINS, HOST, PORT
+from settings import IPGEOLOCATION_API_KEY, GOOGLE_GEOLOCATION_API_KEY
 from starlette.responses import JSONResponse
 import math
 
@@ -1528,23 +1529,90 @@ async def detect_user_location(request: Request) -> Tuple[Optional[float], Optio
             return None
         
         async def fetch_ipgeolocation():
-            """Source 5: ip-api.io (Alternative free service)"""
+            """Source 5: ipgeolocation.io (Premium with API key - HIGHEST accuracy)"""
             try:
-                async with httpx.AsyncClient(timeout=8.0) as client:
-                    response = await client.get(f"https://ip-api.io/json/{client_ip}")
-                    if response.status_code == 200:
-                        data = response.json()
-                        return {
-                            "source": "ip-api.io",
-                            "lat": data.get("latitude"),
-                            "lon": data.get("longitude"),
-                            "city": data.get("city", ""),
-                            "region": data.get("region_name", ""),
-                            "country": data.get("country_name", ""),
-                            "confidence": 0.7
-                        }
+                if IPGEOLOCATION_API_KEY:
+                    # Use premium API with API key for best accuracy
+                    async with httpx.AsyncClient(timeout=8.0) as client:
+                        response = await client.get(f"https://api.ipgeolocation.io/ipgeo?apiKey={IPGEOLOCATION_API_KEY}&ip={client_ip}")
+                        if response.status_code == 200:
+                            data = response.json()
+                            return {
+                                "source": "ipgeolocation.io (Premium)",
+                                "lat": float(data.get("latitude", 0)),
+                                "lon": float(data.get("longitude", 0)),
+                                "city": data.get("city", ""),
+                                "region": data.get("state_prov", ""),
+                                "country": data.get("country_name", ""),
+                                "confidence": 0.95  # Highest confidence with API key
+                            }
+                else:
+                    # Fallback to free ip-api.io
+                    async with httpx.AsyncClient(timeout=8.0) as client:
+                        response = await client.get(f"https://ip-api.io/json/{client_ip}")
+                        if response.status_code == 200:
+                            data = response.json()
+                            return {
+                                "source": "ip-api.io",
+                                "lat": data.get("latitude"),
+                                "lon": data.get("longitude"),
+                                "city": data.get("city", ""),
+                                "region": data.get("region_name", ""),
+                                "country": data.get("country_name", ""),
+                                "confidence": 0.7
+                            }
             except Exception as e:
-                print(f"⚠️ ip-api.io: {e}")
+                print(f"⚠️ ipgeolocation: {e}")
+            return None
+        
+        async def fetch_google_geolocation():
+            """Source 6: Google Geolocation API (BEST accuracy with API key)"""
+            try:
+                if GOOGLE_GEOLOCATION_API_KEY:
+                    async with httpx.AsyncClient(timeout=8.0) as client:
+                        response = await client.post(
+                            f"https://www.googleapis.com/geolocation/v1/geolocate?key={GOOGLE_GEOLOCATION_API_KEY}",
+                            json={"considerIp": "true"}
+                        )
+                        if response.status_code == 200:
+                            data = response.json()
+                            location = data.get("location", {})
+                            if location:
+                                # Reverse geocode to get city/region/country
+                                lat = location.get("lat")
+                                lon = location.get("lng")
+                                if lat and lon:
+                                    # Use reverse geocoding API
+                                    geocode_response = await client.get(
+                                        f"https://maps.googleapis.com/maps/api/geocode/json?latlng={lat},{lon}&key={GOOGLE_GEOLOCATION_API_KEY}"
+                                    )
+                                    if geocode_response.status_code == 200:
+                                        geocode_data = geocode_response.json()
+                                        if geocode_data.get("results"):
+                                            address_components = geocode_data["results"][0].get("address_components", [])
+                                            city = ""
+                                            region = ""
+                                            country = ""
+                                            for component in address_components:
+                                                types = component.get("types", [])
+                                                if "locality" in types:
+                                                    city = component.get("long_name", "")
+                                                elif "administrative_area_level_1" in types:
+                                                    region = component.get("long_name", "")
+                                                elif "country" in types:
+                                                    country = component.get("long_name", "")
+                                            
+                                            return {
+                                                "source": "Google Geolocation API (Premium)",
+                                                "lat": lat,
+                                                "lon": lon,
+                                                "city": city,
+                                                "region": region,
+                                                "country": country,
+                                                "confidence": 0.98  # Highest confidence - Google's accuracy
+                                            }
+            except Exception as e:
+                print(f"⚠️ Google Geolocation: {e}")
             return None
         
         # Fetch from ALL sources IN PARALLEL for maximum accuracy
@@ -1555,6 +1623,7 @@ async def detect_user_location(request: Request) -> Tuple[Optional[float], Optio
             fetch_ipinfo(),
             fetch_ipwhois(),
             fetch_ipgeolocation(),
+            fetch_google_geolocation(),
             return_exceptions=True
         )
         
@@ -1562,7 +1631,7 @@ async def detect_user_location(request: Request) -> Tuple[Optional[float], Optio
         valid_results = [r for r in results if r and isinstance(r, dict) and r.get("lat") and r.get("lon")]
         
         if valid_results:
-            print(f"✅ Got {len(valid_results)}/5 location sources")
+            print(f"✅ Got {len(valid_results)}/6 location sources")
             
             # Use the highest confidence result
             best_result = max(valid_results, key=lambda x: x.get("confidence", 0))

@@ -18,8 +18,12 @@ _origins = os.getenv("ALLOW_ORIGINS", "*")
 ALLOW_ORIGINS = [o.strip() for o in _origins.split(",") if o.strip()] or ["*"]
 
 # NASA API Configuration (use environment variables or fall back to DEMO_KEY)
-NASA_EARTHDATA_TOKEN = os.getenv("NASA_EARTHDATA_TOKEN", "")
-NASA_API_KEY = os.getenv("NASA_API_KEY", "DEMO_KEY")
+NASA_EARTHDATA_TOKEN = os.getenv("NASA_EARTHDATA_TOKEN", "").strip()
+NASA_API_KEY = os.getenv("NASA_API_KEY", "DEMO_KEY").strip()
+
+# Geolocation API Configuration (for accurate IP-based location detection)
+IPGEOLOCATION_API_KEY = os.getenv("IPGEOLOCATION_API_KEY", "ce4c232878df4cb6b028571171d707e9").strip()  # https://ipgeolocation.io/
+GOOGLE_GEOLOCATION_API_KEY = os.getenv("GOOGLE_GEOLOCATION_API_KEY", "AIzaSyCdRbntNR-nHbDID_VmA5n3zP1CI4chZp4").strip()  # https://developers.google.com/maps/documentation/geolocation
 
 # NASA API Base URLs
 NASA_POWER_BASE_URL = "https://power.larc.nasa.gov/api/temporal/daily/point"
